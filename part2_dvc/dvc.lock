@@ -5,55 +5,55 @@ stages:
     deps:
     - path: scripts/data.py
       hash: md5
-      md5: f23a78e2a2569f6233e1ce8a4ab5ac14
-      size: 919
+      md5: cc7f9ac30111aa964f7a6acc395b512b
+      size: 925
     params:
       params.yaml:
         index_col: id
     outs:
     - path: data/initial_data.csv
       hash: md5
-      md5: 78bd96bbd377c746bbc88167f210ad2c
-      size: 12114763
+      md5: 871987d311d379d6b834db3f872a1d4a
+      size: 13104943
       cloud:
         my_storage:
-          etag: 78bd96bbd377c746bbc88167f210ad2c
-          version_id: 00061BA6F61847FD
+          etag: 871987d311d379d6b834db3f872a1d4a
+          version_id: 00061BC6CF41E00A
   fit_model:
     cmd: python scripts/fit.py
     deps:
     - path: data/initial_data.csv
       hash: md5
-      md5: 78bd96bbd377c746bbc88167f210ad2c
-      size: 12114763
+      md5: 871987d311d379d6b834db3f872a1d4a
+      size: 13104943
     - path: scripts/fit.py
       hash: md5
-      md5: 8545e73828af330e0ac7b8c66118cbf2
-      size: 1444
+      md5: 0af52bd16627cbb29a66f5cb7af972aa
+      size: 1327
     params:
       params.yaml:
         criterion: squared_error
         index_col: id
-        max_depth: 10
+        max_depth: 15
         n_estimators: 100
         one_hot_drop: if_binary
         target_col: price
     outs:
     - path: models/fitted_model.pkl
       hash: md5
-      md5: 22363711f9c912b1fc83d571afebec6f
-      size: 12812295
+      md5: 441abcd8ae8db66a9ac8057c9ae6e7da
+      size: 85367
       cloud:
         my_storage:
-          etag: 22363711f9c912b1fc83d571afebec6f
-          version_id: 00061BA6F61BCA28
+          etag: 441abcd8ae8db66a9ac8057c9ae6e7da
+          version_id: 00061BC6CF3C8DA8
   evaluate_model:
     cmd: python scripts/evaluate.py
     deps:
     - path: models/fitted_model.pkl
       hash: md5
-      md5: 22363711f9c912b1fc83d571afebec6f
-      size: 12812295
+      md5: 441abcd8ae8db66a9ac8057c9ae6e7da
+      size: 85367
     - path: scripts/evaluate.py
       hash: md5
       md5: efa1e532ec823248f65e5b2839e7201d
@@ -64,6 +64,7 @@ stages:
         metrics:
         - neg_mean_absolute_error
         - neg_mean_squared_error
+        - neg_mean_absolute_percentage_error
         - r2
         n_jobs: -1
         n_splits: 5
@@ -71,9 +72,9 @@ stages:
     outs:
     - path: cv_results/cv_res.json
       hash: md5
-      md5: 4182d96b9f9b96db84c3539c8b9e4cb8
-      size: 155
+      md5: 0f8c387e4ae90e8b7b9bf092f7c08d30
+      size: 209
       cloud:
         my_storage:
-          etag: 4182d96b9f9b96db84c3539c8b9e4cb8
-          version_id: 00061BA6F6192BAE
+          etag: 0f8c387e4ae90e8b7b9bf092f7c08d30
+          version_id: 00061BC6CF3B9452

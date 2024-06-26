@@ -12,16 +12,14 @@ def fit_model():
         params = yaml.safe_load(fd)
     data = pd.read_csv('data/initial_data.csv')
 
-    cat_features = data.select_dtypes(include='object')
+    cat_features = data.select_dtypes(include='bool')
     potential_binary_features = cat_features.nunique() == 2
 
     binary_cat_features = cat_features[potential_binary_features[potential_binary_features].index]
-    num_features = data.select_dtypes(['float'])
 
     preprocessor = ColumnTransformer(
         [
-        ('binary', OneHotEncoder(drop=params['one_hot_drop']), binary_cat_features.columns.tolist()),
-        ('num', StandardScaler(), num_features.columns.tolist())
+        ('binary', OneHotEncoder(drop=params['one_hot_drop']), binary_cat_features.columns.tolist())
         ],
         remainder='drop',
         verbose_feature_names_out=False

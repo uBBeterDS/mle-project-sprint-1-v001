@@ -21,7 +21,7 @@ def get_data():
         params = yaml.safe_load(fd)
 
     conn = create_connection()
-    data = pd.read_sql('select * from flats_churn', conn, index_col=params['index_col'])
+    data = pd.read_sql('select * from clean_flats_churn', conn, index_col=params['index_col'])
     conn.dispose()
 
     os.makedirs('data', exist_ok=True)

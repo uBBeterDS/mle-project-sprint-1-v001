@@ -14,7 +14,7 @@ import pendulum
 )
 def prepare_dataset():
     from airflow.providers.postgres.hooks.postgres import PostgresHook
-    from sqlalchemy import MetaData, Table, Column, Boolean, Integer, Float, UniqueConstraint
+    from sqlalchemy import MetaData, Table, Column, Boolean, Integer, Float, UniqueConstraint, Numeric
     import sqlalchemy
     import pandas as pd
     import numpy as np
@@ -34,7 +34,7 @@ def prepare_dataset():
             Column('rooms', Integer),
             Column('studio', Boolean),
             Column('total_area', Float),
-            Column('price', Integer),
+            Column('price', Numeric),
             Column('build_year', Integer),
             Column('building_type_int', Integer),
             Column('latitude', Float),
@@ -67,9 +67,6 @@ def prepare_dataset():
 
     @task
     def transform(data):
-        data = fill_missing_values(data)
-        data = remove_duplicates(data)
-        data = remove_outliers(data)
         return data
     
     @task
