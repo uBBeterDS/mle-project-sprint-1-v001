@@ -54,12 +54,8 @@ def clean_dataset():
         hook = PostgresHook('destination_db')
         conn = hook.get_conn()
         sql = f"""
-        SELECT
-            f.id, f.floor, f.is_apartment, f.kitchen_area, f.living_area, f.rooms, f.studio, f.total_area, f.price, 
-            b.build_year, b.building_type_int, b.latitude, b.longitude, b.ceiling_height, b.flats_count, b.floors_total, b.has_elevator
-        FROM flats as f
-        LEFT JOIN buildings as b
-        ON f.building_id = b.id
+        SELECT *
+        FROM flats_churn
         """
         data = pd.read_sql(sql, conn)
         conn.close()
